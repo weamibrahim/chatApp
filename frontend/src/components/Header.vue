@@ -46,7 +46,9 @@ const store = useStore();
 const router = useRouter();
 
 const token = store.getters.getToken;
-const socket = io("https://chat-app-2cap.vercel.app");
+const socket = io("https://chat-app-2cap.vercel.app",{
+  withCredentials: true
+});
 const storedUser = localStorage.getItem("user");
 const userId = storedUser ? JSON.parse(storedUser)._id : null;
 

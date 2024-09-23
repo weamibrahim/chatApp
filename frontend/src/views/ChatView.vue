@@ -118,7 +118,6 @@ const sendMessage = () => {
   };
 
   socket.emit("sendMessage", messageData);
-  console.log("Message sent:", messageData);
   message.value = "";
   scrollToBottom();
 };
@@ -154,18 +153,13 @@ onMounted(async () => {
   if (!recipientId.value) return;
 
   await fetchUser();
-  socket = io("https://chat-app-2cap.vercel.app");
-  socket.on("connect", () => {
-  console.log("Connected to server with socket ID:", socket.id);
-  socket.emit("join", userId);
+  socket = io("https://chat-app-2cap.vercel.app",{
+  withCredentials: true
 });
- 
-
+  socket.emit("join", userId);
 
   socket.on("newMessage", (message) => {
-    console.log(socket);
     handleNewMessage(message);
-    console.log(message);
   });
 
   await getAllMessages();
