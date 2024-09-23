@@ -5,7 +5,8 @@ const Message = require('./Models/Message');
 module.exports = function (server) {
   const io = socketIO(server, {
     cors: {
-      origin: "https://chat-app-2cap.vercel.app", 
+      origin: ["https://chat-app-2cap.vercel.app", 
+      "http://localhost:5173"  ],
       methods: ["GET", "POST"],
     }
   });
@@ -13,7 +14,6 @@ module.exports = function (server) {
   io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
 
-    // Join room based on userId and mark the user as online
     socket.on('join', async (userId) => {
       socket.join(userId);
       socket.userId = userId;
