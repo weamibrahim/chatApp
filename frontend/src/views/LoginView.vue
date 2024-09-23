@@ -50,7 +50,7 @@ const login = async () => {
     console.log("Sending request to the server with payload:", user);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://chat-app-one-rose-29.vercel.app/api/users/login",
         user
       );
       console.log("Server response:", response);
@@ -58,7 +58,7 @@ const login = async () => {
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       store.dispatch("checkLogin", true);
-     
+
       router.push("/home");
       toast.success("Login successful!", {
         timeout: 1000,

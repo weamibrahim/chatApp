@@ -55,11 +55,11 @@ const user = reactive({
   name: "",
   email: "",
   password: "",
-  profileImage: null, 
+  profileImage: null,
 });
 
 const handleFileUpload = (event) => {
-  user.profileImage = event.target.files[0]; 
+  user.profileImage = event.target.files[0];
 };
 
 const register = async () => {
@@ -69,10 +69,10 @@ const register = async () => {
       formData.append("name", user.name);
       formData.append("email", user.email);
       formData.append("password", user.password);
-      formData.append("image", user.profileImage); 
+      formData.append("image", user.profileImage);
 
       const response = await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://chat-app-one-rose-29.vercel.app/api/users/register",
         formData,
         {
           headers: {

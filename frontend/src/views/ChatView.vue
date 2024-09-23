@@ -72,7 +72,7 @@ const route = useRoute();
 
 const userId = store.getters.getUserInfo._id;
 console.log(userId);
-const recipientId = ref(route.params.id || null); 
+const recipientId = ref(route.params.id || null);
 const recipientName = ref("");
 
 const message = ref("");
@@ -88,7 +88,7 @@ const toggleSidebar = () => {
 };
 // Fetch recipient name
 const fetchUser = async () => {
-  await store.dispatch("fetchOneUser", recipientId.value); 
+  await store.dispatch("fetchOneUser", recipientId.value);
   recipientName.value = store.getters.getOneUser.name;
 };
 
@@ -139,7 +139,6 @@ const scrollToBottom = () => {
   });
 };
 
-
 watch(
   () => route.params.id,
   async (newId) => {
@@ -154,7 +153,7 @@ onMounted(async () => {
   if (!recipientId.value) return;
 
   await fetchUser();
-  socket = io("http://localhost:5000");
+  socket = io("https://chat-app-one-rose-29.vercel.app");
   socket.emit("join", userId);
 
   socket.on("newMessage", (message) => {
@@ -215,7 +214,7 @@ onUnmounted(() => {
 }
 
 .message-sent .profile-image {
-  order: -1; 
+  order: -1;
 
   margin-right: 0;
 }

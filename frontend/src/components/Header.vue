@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="bg-body-tertiary">
-      <div class="d-flex justify-content-between container-fluid align-items-center">
+      <div
+        class="d-flex justify-content-between container-fluid align-items-center"
+      >
         <div class="font-bold fs-3 my-2">
           <img
             src="../assets/logo.jpg"
@@ -12,7 +14,10 @@
           </RouterLink>
         </div>
         <div class="my-2" v-if="!store.state.IsLogin">
-          <RouterLink to="/register" class="text-decoration-none text-dark fs-4 mx-2">
+          <RouterLink
+            to="/register"
+            class="text-decoration-none text-dark fs-4 mx-2"
+          >
             register</RouterLink
           >
           <RouterLink to="/" class="text-decoration-none text-dark fs-4"
@@ -41,12 +46,12 @@ const store = useStore();
 const router = useRouter();
 
 const token = store.getters.getToken;
-const socket = io("http://localhost:5000");
+const socket = io("https://chat-app-one-rose-29.vercel.app");
 const storedUser = localStorage.getItem("user");
 const userId = storedUser ? JSON.parse(storedUser)._id : null;
 
 if (userId) {
-   socket.emit("join", userId);
+  socket.emit("join", userId);
 } else {
   console.log("User not logged in");
 }
@@ -58,13 +63,11 @@ if (token) {
 }
 
 const logout = () => {
-  
   socket.emit("logout", userId);
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   store.dispatch("checkLogin", false);
   router.push("/login");
-  
 };
 </script>
 

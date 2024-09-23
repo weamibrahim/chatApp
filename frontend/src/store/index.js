@@ -1,98 +1,104 @@
-import { createStore } from 'vuex';
-import axios from 'axios';
+import { createStore } from "vuex";
+import axios from "axios";
 
 export default createStore({
-    state: {
-        users: [],
-        user: {},
-        messages: [],
-        token: localStorage.getItem('token') || null,
-        userInfo:JSON.parse(localStorage.getItem('user'))||null,
-        IsLogin:false
-
+  state: {
+    users: [],
+    user: {},
+    messages: [],
+    token: localStorage.getItem("token") || null,
+    userInfo: JSON.parse(localStorage.getItem("user")) || null,
+    IsLogin: false,
+  },
+  getters: {
+    getUsers(state) {
+      return state.users;
     },
-    getters: {
-        getUsers(state) {
-            return state.users;
-        },
-        getOneUser(state) {
-            return state.user;
-        },
-        getMessages(state) {
-            return state.messages;
-        },
-        getToken(state) {
-            return state.token;
-        },
-        getUserInfo(state) {
-            return state.userInfo
-        }
-
+    getOneUser(state) {
+      return state.user;
     },
-    mutations: {
-        setUsers(state, users) {
-            state.users = users;
-        },
-        setOneUser(state, user) {
-            state.user = user;
-        },
-        setMessages(state, messages) {
-            state.messages = messages;
-        },
-        setLogin(state,isLoggedIn){
-            state.IsLogin=isLoggedIn;
-            console.log(state.IsLogin)
-        }
+    getMessages(state) {
+      return state.messages;
     },
-    actions: {
-        async fetchUsers({ commit }) {
-            try {
-                const user = JSON.parse(localStorage.getItem('user'));
-                const userId = user._id;
-                const res = await axios(`http://localhost:5000/api/users/${userId}`,{
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.state.token}`
-                    }
-                });
-                commit('setUsers', res.data);
-            } catch (error) {
-                console.error('Failed to fetch users:', error);
-            }
-        },
-        async fetchOneUser({ commit }, receiverId) {
-            try {
-                const res = await axios(`http://localhost:5000/api/users/user/${receiverId}`,{
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.state.token}`
-                    }
-                });
-                commit('setOneUser', res.data);
-            } catch (error) {
-                console.error('Failed to fetch the user:', error);
-            }
-        },
-        async fetchMessages({ commit },{senderId,receiverId}) {
-            try {
-                const res = await axios(`http://localhost:5000/api/messages/${senderId}/${receiverId}`,{
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.state.token}`
-                    }
-                });
-                commit('setMessages', res.data);
-            } catch (error) {
-                console.error('Failed to fetch messages:', error);
-            }
-        },
-        async checkLogin({commit},isLoggedIn){
-            commit('setLogin',isLoggedIn)
-        }
-        
+    getToken(state) {
+      return state.token;
     },
-    modules: {}
+    getUserInfo(state) {
+      return state.userInfo;
+    },
+  },
+  mutations: {
+    setUsers(state, users) {
+      state.users = users;
+    },
+    setOneUser(state, user) {
+      state.user = user;
+    },
+    setMessages(state, messages) {
+      state.messages = messages;
+    },
+    setLogin(state, isLoggedIn) {
+      state.IsLogin = isLoggedIn;
+      console.log(state.IsLogin);
+    },
+  },
+  actions: {
+    async fetchUsers({ commit }) {
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const userId = user._id;
+        const res = await axios(
+          `https://chat-app-one-rose-29.vercel.app/api/users/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.state.token}`,
+            },
+          }
+        );
+        commit("setUsers", res.data);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      }
+    },
+    async fetchOneUser({ commit }, receiverId) {
+      try {
+        const res = await axios(
+          `https://chat-app-one-rose-29.vercel.app/api/users/user/${receiverId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.state.token}`,
+            },
+          }
+        );
+        commit("setOneUser", res.data);
+      } catch (error) {
+        console.error("Failed to fetch the user:", error);
+      }
+    },
+    async fetchMessages({ commit }, { senderId, receiverId }) {
+      try {
+        const res = await axios(
+          `https://chat-app-one-rose-29.vercel.app/api/messages/${senderId}/${receiverId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.state.token}`,
+            },
+          }
+        );
+        commit("setMessages", res.data);
+      } catch (error) {
+        console.error("Failed to fetch messages:", error);
+      }
+    },
+    async checkLogin({ commit }, isLoggedIn) {
+      commit("setLogin", isLoggedIn);
+    },
+  },
+  modules: {},
 });

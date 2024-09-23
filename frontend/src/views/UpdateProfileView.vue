@@ -68,7 +68,6 @@
                 <div class="col-sm-10">
                   <input
                     type="file"
-                   
                     class="form-control"
                     @change="onFileChange"
                   />
@@ -106,8 +105,8 @@ console.log(infOfUser);
 
 const onFileChange = (event) => {
   const profileImage = event.target.files[0];
-  if(profileImage){
-    infOfUser.profileImage=profileImage
+  if (profileImage) {
+    infOfUser.profileImage = profileImage;
   }
 };
 
@@ -121,7 +120,7 @@ const updateProfile = async () => {
 
   try {
     const data = await axios.put(
-      `http://localhost:5000/api/users/${infOfUser._id}`,
+      `https://chat-app-one-rose-29.vercel.app/api/users/${infOfUser._id}`,
       formData,
       {
         headers: {
