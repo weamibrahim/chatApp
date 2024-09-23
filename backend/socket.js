@@ -5,12 +5,10 @@ const Message = require('./Models/Message');
 module.exports = function (server) {
   const io = socketIO(server, {
     cors: {
-      origin: ["https://chat-app-2cap.vercel.app", 
-      "http://localhost:5173"  ],
-      methods: ["GET", "POST"],
+      origin: "*", 
     }
   });
-
+  
   io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
 

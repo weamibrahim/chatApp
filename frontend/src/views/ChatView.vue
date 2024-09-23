@@ -153,13 +153,13 @@ onMounted(async () => {
   if (!recipientId.value) return;
 
   await fetchUser();
-  socket = io("https://chat-app-one-rose-29.vercel.app", {
-  transports: ['websocket'],
-});
+  socket = io("https://chat-app-2cap.vercel.app");
   socket.emit("join", userId);
 
   socket.on("newMessage", (message) => {
+    console.log(socket);
     handleNewMessage(message);
+    console.log(message);
   });
 
   await getAllMessages();
