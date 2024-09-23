@@ -32,7 +32,9 @@ import { useRouter } from "vue-router";
 import io from "socket.io-client";
 
 const search = ref("");
-const socket = io("https://chat-app-one-rose-29.vercel.app");
+const socket = io("https://chat-app-one-rose-29.vercel.app", {
+  transports: ['websocket'],
+});
 const users = ref([]);
 const store = useStore();
 const router = useRouter();

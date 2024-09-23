@@ -153,7 +153,9 @@ onMounted(async () => {
   if (!recipientId.value) return;
 
   await fetchUser();
-  socket = io("https://chat-app-one-rose-29.vercel.app");
+  socket = io("https://chat-app-one-rose-29.vercel.app", {
+  transports: ['websocket'],
+});
   socket.emit("join", userId);
 
   socket.on("newMessage", (message) => {
