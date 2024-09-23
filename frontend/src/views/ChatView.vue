@@ -155,7 +155,12 @@ onMounted(async () => {
 
   await fetchUser();
   socket = io("https://chat-app-2cap.vercel.app");
+  socket.on("connect", () => {
+  console.log("Connected to server with socket ID:", socket.id);
   socket.emit("join", userId);
+});
+ 
+
 
   socket.on("newMessage", (message) => {
     console.log(socket);
