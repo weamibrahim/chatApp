@@ -58,7 +58,7 @@ const login = async () => {
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       store.dispatch("checkLogin", true);
-
+      
       router.push("/home");
       toast.success("Login successful!", {
         timeout: 1000,
