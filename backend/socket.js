@@ -22,22 +22,22 @@ module.exports = function (server) {
 
    
 
-    // Listen for sending a message from the client
     socket.on('sendMessage', async (messageData) => {
-      console.log("sendMessage",messageData);
-      const { senderId, receiverId, message } = messageData;
-
       try {
+        const { senderId, receiverId, message } = messageData;
+        console.log('Message data received:', messageData); // Log received data
+        
         const newMessage = new Message({ senderId, receiverId, message });
         await newMessage.save();
-
-        // Emit the new message to the sender and receiver
+        console.log('Message saved:', newMessage); // Log message after saving
+    
         io.to(senderId).emit('newMessage', newMessage);
         io.to(receiverId).emit('newMessage', newMessage);
       } catch (error) {
-        console.error('Error saving message:', error);
+        console.error('Error saving message:', error); // Log error
       }
     });
+    
 
     socket.on('logout', async (userId) => {
       await User.findByIdAndUpdate(userId, { status: "offline" });
