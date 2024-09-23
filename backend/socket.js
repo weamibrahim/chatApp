@@ -12,7 +12,7 @@ module.exports = function (server) {
   });
 
   io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+    console.log('User connected:', socket);
 
     socket.on('join', async (userId) => {
       socket.join(userId);
