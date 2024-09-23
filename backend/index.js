@@ -8,7 +8,8 @@ const port = process.env.PORT;
 
 // Middleware to parse JSON data
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ["https://chat-app-2cap.vercel.app", "http://localhost:5173"]}));
 
 // Import routes
 const UserRoute = require('./Routes/UserRoute');
