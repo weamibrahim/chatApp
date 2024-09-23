@@ -118,6 +118,7 @@ const sendMessage = () => {
   };
 
   socket.emit("sendMessage", messageData);
+  console.log("Message sent:", messageData);
   message.value = "";
   scrollToBottom();
 };

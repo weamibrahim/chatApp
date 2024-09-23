@@ -14,6 +14,7 @@ module.exports = function (server) {
 
     socket.on('join', async (userId) => {
       socket.join(userId);
+      console.log(`User with id ${userId} joined the room`);
       socket.userId = userId;
       await User.findByIdAndUpdate(userId, { status: "online" });
       io.emit('updateUserStatus', { userId, status: "online" });
@@ -23,6 +24,7 @@ module.exports = function (server) {
 
     // Listen for sending a message from the client
     socket.on('sendMessage', async (messageData) => {
+      console.log("sendMessage",messageData);
       const { senderId, receiverId, message } = messageData;
 
       try {
