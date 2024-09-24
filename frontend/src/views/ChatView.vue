@@ -154,7 +154,7 @@ onMounted(async () => {
 
   await fetchUser();
  socket = io("https://chat-app-one-rose-29.vercel.app", {
-    transports: ["websocket"], 
+  
     secure: true
 });
 

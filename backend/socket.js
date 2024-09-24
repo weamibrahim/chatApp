@@ -8,13 +8,13 @@ module.exports = function (server) {
       origin: ["https://chat-app-2cap.vercel.app", "http://localhost:5173"],
       methods: ["GET", "POST"],
       credentials: true
-    },
-    transports: ["websocket"]
+    }
   });
   
 
   io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+    console.log('A user connected:', socket.id);
+    console.log('Socket request:', socket.request);
 
     socket.on('join', async (userId) => {
       socket.join(userId);
