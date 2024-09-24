@@ -154,9 +154,11 @@ onMounted(async () => {
 
   await fetchUser();
   socket = io("https://chat-app-one-rose-29.vercel.app", {
+  path: "/socket.io/socket.io.js", 
   transports: ["websocket", "polling"],
   withCredentials: true
 });
+
 
   socket.emit("join", userId);
 

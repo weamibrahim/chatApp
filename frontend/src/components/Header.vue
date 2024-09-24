@@ -47,6 +47,7 @@ const router = useRouter();
 
 const token = store.getters.getToken;
 const socket = io("https://chat-app-one-rose-29.vercel.app", {
+  path: "/socket.io/socket.io.js", 
   transports: ["websocket", "polling"],
   withCredentials: true
 });
