@@ -7,8 +7,13 @@ module.exports = function (server) {
     cors: {
       origin: ["https://chat-app-2cap.vercel.app", "http://localhost:5173"],
       methods: ["GET", "POST"],
-      credentials: true
-    }
+      credentials: true,
+      transports: ["websocket"],
+      
+    },
+    path: "/socket.io/",
+    
+    addTrailingSlash: false 
   });
   
 
