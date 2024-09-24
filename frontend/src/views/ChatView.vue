@@ -153,24 +153,10 @@ onMounted(async () => {
   if (!recipientId.value) return;
 
   await fetchUser();
- socket = io("https://chat-app-one-rose-29.vercel.app", {
-  path: "/socket.io/",
-  transports: ["websocket"],
-  secure: true,
+  socket = io("https://chat-app-one-rose-29.vercel.app", {
+  withCredentials: true,
+  transports: ["websocket", "polling"],
 });
-
-
-socket.on("connect", () => {
-            console.log("Connected to Socket.IO server");
-        });
-
-        socket.on("connect_error", (err) => {
-            console.error("Connection Error:", err);
-       });
-
-        socket.on("connect_timeout", (err) => {
-            console.error("Connection Timeout:", err);
-        });
 
   socket.emit("join", userId);
 
