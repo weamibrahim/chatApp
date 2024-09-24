@@ -7,15 +7,14 @@ module.exports = function (server) {
     cors: {
       origin: ["https://chat-app-2cap.vercel.app", "http://localhost:5173"],
       methods: ["GET", "POST"],
-      credentials: true,
+      credentials: true
     },
-  
-    transports: ["websocket", "polling"],
+    transports: ["websocket", "polling"]
   });
   
 
   io.on('connection', (socket) => {
-    console.log('User connected:', socket);
+    console.log('User connected:', socket.id);
 
     socket.on('join', async (userId) => {
       socket.join(userId);
