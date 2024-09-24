@@ -33,7 +33,7 @@ import io from "socket.io-client";
 
 const search = ref("");
 const socket = io("https://chat-app-one-rose-29.vercel.app", {
-  path: "/socket.io/socket.io.js", 
+  path: "/socket.io/", 
   transports: ["websocket", "polling"],
   withCredentials: true
 });

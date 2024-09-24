@@ -9,7 +9,7 @@ module.exports = function (server) {
       methods: ["GET", "POST"],
       credentials: true,
     },
-    path: "/socket.io/socket.io.js", 
+  
     transports: ["websocket", "polling"],
   });
   
