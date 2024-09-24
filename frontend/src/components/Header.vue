@@ -47,9 +47,10 @@ const router = useRouter();
 
 const token = store.getters.getToken;
 const socket = io("https://chat-app-one-rose-29.vercel.app", {
-  withCredentials: true,
-  transports: ["polling"],
+  transports: ["websocket", "polling"],
+  withCredentials: true
 });
+
 
 const storedUser = localStorage.getItem("user");
 const userId = storedUser ? JSON.parse(storedUser)._id : null;
