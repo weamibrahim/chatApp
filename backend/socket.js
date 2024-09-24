@@ -3,13 +3,15 @@ const User = require('./Models/User');
 const Message = require('./Models/Message'); 
 
 module.exports = function (server) {
-  const io = socketIO(server, {
+  const io = require("socket.io")(server, {
     cors: {
-      origin: ["https://chat-app-2cap.vercel.app", 
-      "http://localhost:5173"  ],
-      credentials: true
-    }
+      origin: ["https://chat-app-2cap.vercel.app", "http://localhost:5173"],
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+    transports: ["polling"],
   });
+  
 
   io.on('connection', (socket) => {
     console.log('User connected:', socket);
