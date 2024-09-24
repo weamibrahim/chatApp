@@ -13,7 +13,7 @@ module.exports = function (server) {
     },
     path: "/socket.io/",
     
-    addTrailingSlash: false ,
+  
     transports: ["websocket"],
   });
   
