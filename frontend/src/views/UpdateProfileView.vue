@@ -120,7 +120,7 @@ const updateProfile = async () => {
 
   try {
     const data = await axios.put(
-      `https://chat-app-gamma-snowy.vercel.app/api/users/${infOfUser._id}`,
+      `https://chatapp-backend-production-69ae.up.railway.app/api/users/${infOfUser._id}`,
       formData,
       {
         headers: {

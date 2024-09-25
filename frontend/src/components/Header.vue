@@ -46,10 +46,7 @@ const store = useStore();
 const router = useRouter();
 
 const token = store.getters.getToken;
-const socket = io("https://chat-app-gamma-snowy.vercel.app", {
-  withCredentials: true,
-  transports: ["websocket", "polling"],
-});
+const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 
 const storedUser = localStorage.getItem("user");
 const userId = storedUser ? JSON.parse(storedUser)._id : null;

@@ -32,10 +32,7 @@ import { useRouter } from "vue-router";
 import io from "socket.io-client";
 
 const search = ref("");
-const socket = io("https://chat-app-gamma-snowy.vercel.app", {
-  withCredentials: true,
-  transports: ["websocket", "polling"],
-});
+const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 
 const users = ref([]);
 const store = useStore();

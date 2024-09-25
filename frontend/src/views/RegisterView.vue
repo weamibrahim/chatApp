@@ -72,7 +72,7 @@ const register = async () => {
       formData.append("image", user.profileImage);
 
       const response = await axios.post(
-        "https://chat-app-gamma-snowy.vercel.app/api/users/register",
+        "https://chatapp-backend-production-69ae.up.railway.app/api/users/register",
         formData,
         {
           headers: {

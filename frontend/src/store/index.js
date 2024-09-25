@@ -48,7 +48,7 @@ export default createStore({
         const user = JSON.parse(localStorage.getItem("user"));
         const userId = user._id;
         const res = await axios(
-          `https://chat-app-gamma-snowy.vercel.app/api/users/${userId}`,
+          `https://chatapp-backend-production-69ae.up.railway.app/api/users/${userId}`,
           {
             method: "GET",
             headers: {
@@ -65,7 +65,7 @@ export default createStore({
     async fetchOneUser({ commit }, receiverId) {
       try {
         const res = await axios(
-          `https://chat-app-gamma-snowy.vercel.app/api/users/user/${receiverId}`,
+          `https://chatapp-backend-production-69ae.up.railway.app/api/users/user/${receiverId}`,
           {
             method: "GET",
             headers: {
@@ -82,7 +82,7 @@ export default createStore({
     async fetchMessages({ commit }, { senderId, receiverId }) {
       try {
         const res = await axios(
-          `https://chat-app-gamma-snowy.vercel.app/api/messages/${senderId}/${receiverId}`,
+          `https://chatapp-backend-production-69ae.up.railway.app/api/messages/${senderId}/${receiverId}`,
           {
             method: "GET",
             headers: {
