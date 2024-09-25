@@ -178,7 +178,7 @@ onUnmounted(() => {
   background-size: cover;
   background-position: center;
   height: auto;
-  min-height: 110vh;
+  
 }
 .sidebar {
   border-right: 1px solid #ddd9d4;
@@ -198,7 +198,7 @@ onUnmounted(() => {
   overflow-y: auto; /* Allows scrolling when content overflows */
   padding: 10px;
   background-color: #f9f9f98c;
-  max-height: calc(100vh - 150px);
+  max-height: calc(90vh - 150px);
 }
 
 .message-container {

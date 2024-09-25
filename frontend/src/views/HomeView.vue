@@ -24,10 +24,11 @@ const toggleSidebar = () => {
         </div>
       </div>
       <div class="col-md-10 col-sm-12">
-        <div class="d-flex justify-content-center align-items-center h-75">
-          <div class="fs-3 ">Select user to send message</div>
-        </div>
-      </div>
+  <div class="d-flex justify-content-center align-items-center" style="height: 91vh;">
+    <div class="fs-3 text-center">Select user to send message</div>
+  </div>
+</div>
+
     </div>
   </div>
 </template>
