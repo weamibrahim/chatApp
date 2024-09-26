@@ -7,6 +7,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import { MotionPlugin } from '@vueuse/motion'
+
 
 // BootstrapVue 3
 import BootstrapVue3 from 'bootstrap-vue-3';
@@ -22,7 +24,7 @@ library.add(fas);
 // Create Vue app
 const app = createApp(App);
 
-
+app.use(MotionPlugin)
 // Register components globally
 app.component('font-awesome-icon', FontAwesomeIcon);
 

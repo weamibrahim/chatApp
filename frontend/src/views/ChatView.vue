@@ -17,7 +17,13 @@
       <!-- Chat Area -->
       <div class="col-md-10 col-sm-12">
         <div class="chat">
-          <h2 class="my-3">To {{ recipientName }}</h2>
+          <h2 class="my-3 text-center" style="font-family: Sofia, sans-serif">To {{ recipientName }}</h2>
+          <div v-if="isTyping" class="fs-4" style="font-family: Sofia, sans-serif">{{ recipientName }} is typing
+            <span >
+            ...
+            </span>
+
+          </div>
 
           <div class="messages" ref="messagesContainer">
             <div
@@ -49,6 +55,7 @@
               v-model="message"
               placeholder="Type a message..."
               @keyup.enter="sendMessage"
+              @input="onTyping"
             />
             <button @click="sendMessage" class="ms-1">
               <font-awesome-icon :icon="['fas', 'paper-plane']" class="fs-5" />
@@ -61,6 +68,7 @@
 </template>
 
 <script setup>
+
 import UsersView from "./UsersView.vue";
 import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 import { io } from "socket.io-client";
@@ -81,7 +89,12 @@ const messagesContainer = ref(null);
 
 let socket = null;
 const isSidebarVisible = ref(false);
+const isTyping = ref(false);
+let typingTimeout = null;
 
+const onTyping = () => {
+      socket.emit('typing',{  receiverId: recipientId.value});
+    };
 // Toggle sidebar
 const toggleSidebar = () => {
   isSidebarVisible.value = !isSidebarVisible.value;
@@ -156,6 +169,17 @@ onMounted(async () => {
   socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 
   socket.emit("join", userId);
+
+
+  socket.on('userTyping', () => {
+        isTyping.value = true;
+
+      clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(() => {
+          isTyping.value = false;
+        }, 1000);
+      });
+   
 
   socket.on("newMessage", (message) => {
     handleNewMessage(message);
