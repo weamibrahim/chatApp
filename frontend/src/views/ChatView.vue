@@ -78,7 +78,7 @@
 
 <script setup>
 import UsersView from "./UsersView.vue";
-
+import notification from "@/assets/notification.mp3"
 import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 import { io } from "socket.io-client";
 import { useRoute } from "vue-router";
@@ -100,6 +100,13 @@ let socket = null;
 const isSidebarVisible = ref(false);
 const isTyping = ref(false);
 let typingTimeout = null;
+
+const audio = new Audio(notification);
+
+
+const playAudio = () => {
+  audio.play();
+}
 
 const onTyping = () => {
   socket.emit("typing", { receiverId: recipientId.value });
@@ -140,6 +147,7 @@ const sendMessage = () => {
   };
 
   socket.emit("sendMessage", messageData);
+  playAudio();
   message.value = "";
   scrollToBottom();
 };
@@ -190,6 +198,7 @@ onMounted(async () => {
 
   socket.on("newMessage", (message) => {
     handleNewMessage(message);
+    playAudio();
   });
 
   await getAllMessages();
