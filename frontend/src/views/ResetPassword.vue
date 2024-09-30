@@ -18,16 +18,18 @@ const route=useRoute()
 const toast = useToast();
 const password=ref("")
 const token =route.params.token
-console.log(token)
+//console.log(token)
 
-const data={
-    resetToken: token
-    ,password:password.value
-}
 
 const resetPassword =async()=>{
    try{
-    const response= await axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",data)
+    const response= await axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",{password:password.value},
+    {
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    }
+    )
     toast.success(response.data.message,{timeout:1000,position:"top-right"})
    }
    catch(error){
