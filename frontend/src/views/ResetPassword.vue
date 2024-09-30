@@ -32,6 +32,7 @@ const resetPassword =async()=>{
    }
    catch(error){
     console.log(error);
+    console.log('Reset password error:', error.response?.data?.message || error.message);
    }
 
 }
