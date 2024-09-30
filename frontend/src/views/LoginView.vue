@@ -27,6 +27,7 @@
           >Register</router-link
         >
       </p>
+      <p class="text-center"><router-link to="/forgetPassword" class="text-decoration-none ">Forget Password</router-link></p>
     </form>
   </div>
 </template>

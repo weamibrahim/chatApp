@@ -49,7 +49,9 @@
 import axios from "axios";
 import { reactive } from "vue";
 import { useToast } from "vue-toastification";
+import { useRouter } from "vue-router";
 const toast = useToast();
+const router = useRouter();
 
 const user = reactive({
   name: "",
@@ -84,7 +86,7 @@ const register = async () => {
         timeout: 1000,
         position: "top-right",
       });
-
+      router.push("/login");
       console.log("Server response:", response);
     } catch (error) {
       console.error("Register request failed:", error);
