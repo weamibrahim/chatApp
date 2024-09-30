@@ -24,7 +24,7 @@ const resetPassword =async()=>{
    try{
     console.log("password",password.value)
     const response= await axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",
-    {  password: 'newPassword123'},
+    {  password: password.value},
     // {password:password.value},
     {
         headers:{
