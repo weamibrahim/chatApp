@@ -24,7 +24,15 @@ const data={
 }
 const resetPassword =async()=>{
    try{
-    const response=axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",data)
+    const response=axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",
+        {
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(data)
+
+        }
+    )
     toast.success(response.data.message,{timeout:1000,position:"top-right"})
    }
    catch(error){
