@@ -20,7 +20,8 @@ const password=ref("")
 const token =route.params.token
 
 const data={
-    token,password:password.value
+    resetToken: token
+    ,password:password.value
 }
 const resetPassword =async()=>{
    try{
