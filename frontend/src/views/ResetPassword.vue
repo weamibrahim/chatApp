@@ -25,7 +25,7 @@ const resetPassword =async()=>{
     console.log("password",password.value)
     const response= await axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",
     {  password: password.value},
-    // {password:password.value},
+    
     {
         headers:{
             Authorization: `Bearer ${token}`
