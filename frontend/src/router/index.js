@@ -34,10 +34,15 @@ const router = createRouter({
       component:() => import('../views/ChatView.vue')
     ,meta:{requiresAuth:true}
   },
+  {
+    path: '/notFound',
+    name: 'notFound',
+    component: () => import('../views/NotFound.vue')
+  }
   ,
     {
       path: '/:pathMatch(.*)*',
-      redirect: '/' 
+      redirect: '/notFound' 
     },
     {
       path: '/forgetPassword',
@@ -45,7 +50,7 @@ const router = createRouter({
       component: () => import('../views/ForgetPassword.vue')
     },
     {
-      path: '/resetPassword',
+      path: '/resetPassword/:token',
       name: 'resetPassword',
       component: () => import('../views/ResetPassword.vue')
     }
