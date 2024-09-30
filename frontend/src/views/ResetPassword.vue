@@ -18,11 +18,13 @@ const route=useRoute()
 const toast = useToast();
 const password=ref("")
 const token =route.params.token
+console.log(token)
 
 const data={
     resetToken: token
     ,password:password.value
 }
+
 const resetPassword =async()=>{
    try{
     const response= await axios.put("https://chatapp-backend-production-69ae.up.railway.app/api/users/reset-password",data)
