@@ -53,7 +53,7 @@ const filterUsers = computed(() => {
 
 onMounted(async () => {
   await fetchUsers();
-  console.log(users.value);
+  //console.log(users.value);
 
   const userId = store.getters.getUserInfo._id;
   socket.emit("join", userId);

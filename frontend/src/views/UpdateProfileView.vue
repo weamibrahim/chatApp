@@ -130,7 +130,7 @@ const updateProfile = async () => {
       }
     );
 
-    console.log(data.data.updatedUser);
+    //console.log(data.data.updatedUser);
     localStorage.setItem("user", JSON.stringify(data.data.updatedUser));
     toast.success(data.data.message, {
       timeout: 1000,

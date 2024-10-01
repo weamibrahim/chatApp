@@ -68,7 +68,7 @@ const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   store.dispatch("checkLogin", false);
-  router.push("/login");
+  router.push("/");
 };
 </script>
 

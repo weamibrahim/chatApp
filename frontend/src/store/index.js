@@ -9,6 +9,7 @@ export default createStore({
     token: localStorage.getItem("token") || null,
     userInfo: JSON.parse(localStorage.getItem("user")) || null,
     IsLogin: false,
+    passwordVisible: false,
   },
   getters: {
     getUsers(state) {
@@ -26,6 +27,9 @@ export default createStore({
     getUserInfo(state) {
       return state.userInfo;
     },
+    getPasswordVisible(state) {
+      return state.passwordVisible;
+    },
   },
   mutations: {
     setUsers(state, users) {
@@ -41,6 +45,9 @@ export default createStore({
       state.IsLogin = isLoggedIn;
       console.log(state.IsLogin);
     },
+    setPasswordVisible(state) {
+      state.passwordVisible = !state.passwordVisible;
+    }
   },
   actions: {
     async fetchUsers({ commit }) {
@@ -98,7 +105,11 @@ export default createStore({
     },
     async checkLogin({ commit }, isLoggedIn) {
       commit("setLogin", isLoggedIn);
+    }, 
+    async togglePasswordVisible({ commit }) {
+      commit("setPasswordVisible");
     },
   },
+
   modules: {},
 });

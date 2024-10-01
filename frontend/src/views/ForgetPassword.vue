@@ -24,7 +24,7 @@ const email = ref("");
 
 const sendEmail = async () => {
     try {
-        console.log(email.value);
+        //console.log(email.value);
         const response = await axios.post("https://chatapp-backend-production-69ae.up.railway.app/api/users/forgot-password", { email: email.value });
 
 toast.success(response.data.message, {

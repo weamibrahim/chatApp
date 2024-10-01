@@ -5,6 +5,7 @@
       <div>
         <label for="email">Email</label>
         <input
+          type="email"
           v-model="user.email"
           placeholder="Enter your username"
           class="form-control"
@@ -12,12 +13,19 @@
       </div>
       <div>
         <label for="password">Password</label>
-        <input
-          v-model="user.password"
-          placeholder="Enter your password"
-          class="form-control"
-        />
+        <div class="password-wrapper">
+          <input
+            :type="isPasswordVisible ? 'text' : 'password'"
+            v-model="user.password"
+            placeholder="Enter your password"
+            class="form-control password-input"
+          />
+          <span class="password-toggle-icon" @click="togglePasswordVisibility">
+            {{ isPasswordVisible ? "🙈" : "👁️" }}
+          </span>
+        </div>
       </div>
+
       <div class="d-flex justify-content-center my-5">
         <button class="btn btn-info">Login</button>
       </div>
@@ -27,14 +35,18 @@
           >Register</router-link
         >
       </p>
-      <p class="text-center"><router-link to="/forgetPassword" class="text-decoration-none ">Forget Password</router-link></p>
+      <p class="text-center">
+        <router-link to="/forgetPassword" class="text-decoration-none"
+          >Forget Password</router-link
+        >
+      </p>
     </form>
   </div>
 </template>
 
 <script setup>
 import axios from "axios";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -46,16 +58,21 @@ const user = reactive({
   password: "",
 });
 
+const isPasswordVisible = computed(() => store.getters.getPasswordVisible);
+//console.log(isPasswordVisible);
+const togglePasswordVisibility = () => {
+  store.dispatch("togglePasswordVisible");
+};
 const login = async () => {
   if (user.email && user.password) {
-    console.log("Sending request to the server with payload:", user);
+    //console.log("Sending request to the server with payload:", user);
     try {
       const response = await axios.post(
         "https://chatapp-backend-production-69ae.up.railway.app/api/users/login",
+
         user
       );
-      console.log("Server response:", response);
-
+      //console.log("Server response:", response);
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       store.dispatch("checkLogin", true);
@@ -70,6 +87,7 @@ const login = async () => {
       toast.error("Invalid email or password. Please try again.", {
         timeout: 1000,
         position: "top-right",
+
       });
     }
   }
@@ -88,5 +106,15 @@ input,
 button {
   margin-bottom: 10px;
   padding: 10px;
+}
+.password-wrapper {
+  position: relative;
+}
+.password-toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 </style>

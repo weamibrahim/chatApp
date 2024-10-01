@@ -22,13 +22,18 @@
       </div>
 
       <div>
-        <label>Password</label>
-        <input
-          class="form-control"
-          type="password"
-          v-model="user.password"
-          placeholder="Enter your password"
-        />
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input
+            :type="isPasswordVisible ? 'text' : 'password'"
+            v-model="user.password"
+            placeholder="Enter your password"
+            class="form-control password-input"
+          />
+          <span class="password-toggle-icon" @click="togglePasswordVisibility">
+            {{ isPasswordVisible ? "🙈" : "👁️" }}
+          </span>
+        </div>
       </div>
       <div>
         <label>Profile Image</label>
@@ -47,11 +52,13 @@
 
 <script setup>
 import axios from "axios";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 const toast = useToast();
 const router = useRouter();
+const store = useStore();
 
 const user = reactive({
   name: "",
@@ -59,6 +66,12 @@ const user = reactive({
   password: "",
   profileImage: null,
 });
+
+const isPasswordVisible = computed(() => store.getters.getPasswordVisible);
+
+const togglePasswordVisibility = () => {
+  store.dispatch("togglePasswordVisible");
+};
 
 const handleFileUpload = (event) => {
   user.profileImage = event.target.files[0];
@@ -87,7 +100,7 @@ const register = async () => {
         position: "top-right",
       });
       router.push("/login");
-      console.log("Server response:", response);
+      //console.log("Server response:", response);
     } catch (error) {
       console.error("Register request failed:", error);
       toast.error("Failed to register. Please try again.", {
@@ -104,5 +117,15 @@ const register = async () => {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+.password-wrapper {
+  position: relative;
+}
+.password-toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 </style>

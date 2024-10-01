@@ -78,7 +78,7 @@
 
 <script setup>
 import UsersView from "./UsersView.vue";
-import notification from "@/assets/notification.mp3"
+import notification from "@/assets/notification.mp3";
 import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 import { io } from "socket.io-client";
 import { useRoute } from "vue-router";
@@ -88,7 +88,7 @@ const store = useStore();
 const route = useRoute();
 
 const userId = store.getters.getUserInfo._id;
-console.log(userId);
+//console.log(userId);
 const recipientId = ref(route.params.id || null);
 const recipientName = ref("");
 
@@ -103,10 +103,9 @@ let typingTimeout = null;
 
 const audio = new Audio(notification);
 
-
 const playAudio = () => {
   audio.play();
-}
+};
 
 const onTyping = () => {
   socket.emit("typing", { receiverId: recipientId.value });
@@ -127,7 +126,7 @@ const getAllMessages = async () => {
     if (!recipientId.value) return;
     await store.dispatch("fetchMessages", {
       senderId: userId,
-      receiverId: recipientId.value, // Access recipientId.value
+      receiverId: recipientId.value, 
     });
     messages.value = store.getters.getMessages;
     scrollToBottom();
@@ -234,7 +233,7 @@ onUnmounted(() => {
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   flex-grow: 1;
-  overflow-y: auto; 
+  overflow-y: auto;
   padding: 10px;
   background-color: #f9f9f98c;
   max-height: calc(90vh - 150px);
