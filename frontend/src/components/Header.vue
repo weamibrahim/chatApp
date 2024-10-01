@@ -13,7 +13,7 @@
             chatApp
           </RouterLink>
         </div>
-        <div class="my-2" v-if="!store.state.IsLogin">
+        <div class="my-2" v-if="!IsLogin">
           <RouterLink
             to="/register"
             class="text-decoration-none text-dark fs-4 mx-2"
@@ -24,7 +24,7 @@
             >login</RouterLink
           >
         </div>
-        <div class="my-2 d-flex align-items-center" v-if="store.state.IsLogin">
+        <div class="my-2 d-flex align-items-center" v-if="IsLogin">
           <UpdateProfileView class="mx-2 d-inline" />
           <button class="border-0 bg-body-tertiary d-inline" @click="logout">
             <font-awesome-icon
@@ -40,11 +40,12 @@
 <script setup>
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { computed } from "vue";
 import io from "socket.io-client";
 import UpdateProfileView from "@/views/UpdateProfileView.vue";
 const store = useStore();
 const router = useRouter();
-
+const IsLogin= computed(() => store.getters.getIsLogin);
 const token = store.getters.getToken;
 const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 

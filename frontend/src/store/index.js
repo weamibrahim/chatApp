@@ -27,6 +27,9 @@ export default createStore({
     getUserInfo(state) {
       return state.userInfo;
     },
+    getIsLogin(state) {
+      return state.IsLogin;
+    },
     getPasswordVisible(state) {
       return state.passwordVisible;
     },
