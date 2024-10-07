@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default createStore({
   state: {
-    users: [],
     user: {},
     messages: [],
     token: localStorage.getItem("token") || null,
@@ -12,9 +11,6 @@ export default createStore({
     passwordVisible: false,
   },
   getters: {
-    getUsers(state) {
-      return state.users;
-    },
     getOneUser(state) {
       return state.user;
     },
@@ -35,9 +31,6 @@ export default createStore({
     },
   },
   mutations: {
-    setUsers(state, users) {
-      state.users = users;
-    },
     setOneUser(state, user) {
       state.user = user;
     },
@@ -50,28 +43,9 @@ export default createStore({
     },
     setPasswordVisible(state) {
       state.passwordVisible = !state.passwordVisible;
-    }
+    },
   },
   actions: {
-    async fetchUsers({ commit }) {
-      try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const userId = user._id;
-        const res = await axios(
-          `https://chatapp-backend-production-69ae.up.railway.app/api/users/${userId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${this.state.token}`,
-            },
-          }
-        );
-        commit("setUsers", res.data);
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-      }
-    },
     async fetchOneUser({ commit }, receiverId) {
       try {
         const res = await axios(
@@ -108,7 +82,7 @@ export default createStore({
     },
     async checkLogin({ commit }, isLoggedIn) {
       commit("setLogin", isLoggedIn);
-    }, 
+    },
     async togglePasswordVisible({ commit }) {
       commit("setPasswordVisible");
     },

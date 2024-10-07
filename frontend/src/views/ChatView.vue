@@ -45,8 +45,60 @@
               }"
             >
               <div class="message-content">
-                <p>{{ message.message }}</p>
+                <button
+                  type="button"
+                  class="bg-transparent border-0"
+                  data-bs-toggle="modal"
+                  :data-bs-target="'#deleteModal-' + message._id"
+                >
+                  <p>{{ message.message }}</p>
+                </button>
+                <div
+                  class="modal fade"
+                  :id="'deleteModal-' + message._id"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1
+                          class="modal-title text-dark fs-5"
+                          id="exampleModalLabel"
+                        >
+                          Are you sure you want to delete this message?
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-outline-dark"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          @click="deleteMessage(message._id)"
+                          data-bs-dismiss="modal"
+                        >
+                          delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <img
                 :src="
                   message.senderId._id === userId
@@ -83,10 +135,10 @@ import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 import { io } from "socket.io-client";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-
+import { useToast } from "vue-toastification";
 const store = useStore();
 const route = useRoute();
-
+const toast = useToast();
 const userId = store.getters.getUserInfo._id;
 //console.log(userId);
 const recipientId = ref(route.params.id || null);
@@ -107,6 +159,9 @@ const playAudio = () => {
   audio.play();
 };
 
+const deleteMessage = async (id) => {
+  socket.emit("deleteMessage", { senderId: userId, messageId: id });
+};
 const onTyping = () => {
   socket.emit("typing", { receiverId: recipientId.value });
 };
@@ -126,7 +181,7 @@ const getAllMessages = async () => {
     if (!recipientId.value) return;
     await store.dispatch("fetchMessages", {
       senderId: userId,
-      receiverId: recipientId.value, 
+      receiverId: recipientId.value,
     });
     messages.value = store.getters.getMessages;
     scrollToBottom();
@@ -198,6 +253,17 @@ onMounted(async () => {
   socket.on("newMessage", (message) => {
     handleNewMessage(message);
     playAudio();
+  });
+
+  socket.on("messageDelete", (id) => {
+    console.log("message deleted", id);
+    messages.value = messages.value.filter((msg) => msg._id !== id);
+  });
+  socket.on("notAuthorized", (data) => {
+    toast.error(data.message, {
+      timeout: 1000,
+      position: "top-left",
+    });
   });
 
   await getAllMessages();

@@ -99,13 +99,13 @@ const register = async () => {
         timeout: 1000,
         position: "top-right",
       });
-      router.push("/login");
+      router.push("/");
       //console.log("Server response:", response);
     } catch (error) {
       console.error("Register request failed:", error);
       toast.error("Failed to register. Please try again.", {
         timeout: 1000,
-        position: "top-right",
+        position: "top-left",
       });
     }
   }

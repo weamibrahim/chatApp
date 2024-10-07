@@ -86,8 +86,7 @@ const login = async () => {
       console.error("Login request failed:", error);
       toast.error("Invalid email or password. Please try again.", {
         timeout: 1000,
-        position: "top-right",
-
+        position: "top-left",
       });
     }
   }

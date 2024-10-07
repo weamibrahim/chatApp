@@ -45,7 +45,7 @@ import io from "socket.io-client";
 import UpdateProfileView from "@/views/UpdateProfileView.vue";
 const store = useStore();
 const router = useRouter();
-const IsLogin= computed(() => store.getters.getIsLogin);
+const IsLogin = computed(() => store.getters.getIsLogin);
 const token = store.getters.getToken;
 const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 

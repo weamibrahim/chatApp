@@ -37,10 +37,10 @@ const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 const users = ref([]);
 const store = useStore();
 const router = useRouter();
+const userId = store.getters.getUserInfo._id;
 
-const fetchUsers = async () => {
-  await store.dispatch("fetchUsers");
-  users.value = store.getters.getUsers;
+const fetchUsers = () => {
+  socket.emit("getusers", userId);
 };
 const filterUsers = computed(() => {
   //       if (!search.value.trim()) {
@@ -62,6 +62,10 @@ onMounted(async () => {
     if (user) {
       user.status = updatedUser.status;
     }
+  });
+  socket.on("users", (data) => {
+    users.value = data;
+    //console.log(users.value)
   });
 });
 
