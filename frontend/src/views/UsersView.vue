@@ -27,7 +27,7 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
 import io from "socket.io-client";
 
@@ -37,9 +37,15 @@ const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 const users = ref([]);
 const store = useStore();
 const router = useRouter();
-const userId = store.getters.getUserInfo._id;
+
+let infOfUser = JSON.parse(localStorage.getItem("user"));
+console.log(infOfUser);
+const userId = infOfUser._id;
+
+
 
 const fetchUsers = () => {
+  users.value = [];
   socket.emit("getusers", userId);
 };
 const filterUsers = computed(() => {
@@ -52,20 +58,20 @@ const filterUsers = computed(() => {
 });
 
 onMounted(async () => {
-  await fetchUsers();
-  //console.log(users.value);
+ 
+ await fetchUsers();
 
-  const userId = store.getters.getUserInfo._id;
+
   socket.emit("join", userId);
   socket.on("updateUserStatus", (updatedUser) => {
     const user = users.value.find((u) => u._id === updatedUser.userId);
     if (user) {
       user.status = updatedUser.status;
-    }
+    } 
   });
   socket.on("users", (data) => {
     users.value = data;
-    //console.log(users.value)
+    console.log(users.value)
   });
 });
 

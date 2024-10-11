@@ -6,7 +6,6 @@ export default createStore({
     user: {},
     messages: [],
     token: localStorage.getItem("token") || null,
-    userInfo: JSON.parse(localStorage.getItem("user")) || null,
     IsLogin: false,
     passwordVisible: false,
   },
@@ -20,9 +19,7 @@ export default createStore({
     getToken(state) {
       return state.token;
     },
-    getUserInfo(state) {
-      return state.userInfo;
-    },
+    
     getIsLogin(state) {
       return state.IsLogin;
     },

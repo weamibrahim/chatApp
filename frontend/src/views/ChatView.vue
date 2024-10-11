@@ -135,7 +135,7 @@
               <img
                 :src="
                   message.senderId._id === userId
-                    ? store.getters.getUserInfo.profileImage
+                    ? infOfUser.profileImage
                     : message.senderId.profileImage
                 "
                 alt="Profile"
@@ -172,7 +172,10 @@ import { useToast } from "vue-toastification";
 const store = useStore();
 const route = useRoute();
 const toast = useToast();
-const userId = store.getters.getUserInfo._id;
+
+let infOfUser = JSON.parse(localStorage.getItem("user"));
+console.log(infOfUser);
+const userId = infOfUser._id;
 //console.log(userId);
 const recipientId = ref(route.params.id || null);
 const recipientName = ref("");
