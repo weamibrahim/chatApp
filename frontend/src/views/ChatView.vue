@@ -45,14 +45,45 @@
               }"
             >
               <div class="message-content">
-                <button
-                  type="button"
-                  class="bg-transparent border-0"
-                  data-bs-toggle="modal"
-                  :data-bs-target="'#deleteModal-' + message._id"
-                >
-                  <p>{{ message.message }}</p>
-                </button>
+                <div v-if="message.isEditing">
+                  <input
+                    v-model="message.editedMessage"
+                    @keyup.enter="submitEditMessage(message)"
+                    class="border-0 bg-body-secondary rounded-3 p-2"
+                  />
+                  <button
+                    @click="submitEditMessage(message)"
+                    class="border-0 bg-transparent"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'pen-to-square']"
+                      class="ms-2"
+                    />
+                  </button>
+                  <button
+                    @click="cancelEditMessage(message)"
+                    class="border-0 bg-transparent"
+                  >
+                    <font-awesome-icon :icon="['fas', 'circle-xmark']" />
+                  </button>
+                </div>
+
+                <div v-else>
+                  <button
+                    type="button"
+                    class="bg-transparent border-0"
+                    data-bs-toggle="modal"
+                    :data-bs-target="'#deleteModal-' + message._id"
+                  >
+                    <p>{{ message.message }}</p>
+                  </button>
+                  <span @click="editMessage(message)">
+                    <font-awesome-icon
+                      :icon="['fas', 'pen-to-square']"
+                      class="text-black"
+                    />
+                  </span>
+                </div>
                 <div
                   class="modal fade"
                   :id="'deleteModal-' + message._id"
@@ -83,7 +114,9 @@
                           class="btn btn-outline-dark"
                           data-bs-dismiss="modal"
                         >
-                          Close
+                          <font-awesome-icon
+                            :icon="['fas', 'rectangle-xmark']"
+                          />
                         </button>
                         <button
                           type="button"
@@ -91,7 +124,7 @@
                           @click="deleteMessage(message._id)"
                           data-bs-dismiss="modal"
                         >
-                          delete
+                          <font-awesome-icon :icon="['fas', 'trash']" />
                         </button>
                       </div>
                     </div>
@@ -157,6 +190,23 @@ const audio = new Audio(notification);
 
 const playAudio = () => {
   audio.play();
+};
+
+const editMessage = (message) => {
+  message.isEditing = true;
+  message.editedMessage = message.message;
+};
+
+const submitEditMessage = (message) => {
+  socket.emit("updateMessage", {
+    senderId: userId,
+    messageId: message._id,
+    message: message.editedMessage,
+  });
+  message.isEditing = false;
+};
+const cancelEditMessage = (message) => {
+  message.isEditing = false;
 };
 
 const deleteMessage = async (id) => {
@@ -234,8 +284,6 @@ watch(
 );
 
 onMounted(async () => {
-  if (!recipientId.value) return;
-
   await fetchUser();
   socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 
@@ -253,6 +301,16 @@ onMounted(async () => {
   socket.on("newMessage", (message) => {
     handleNewMessage(message);
     playAudio();
+  });
+
+  socket.on("messageUpdate", (updatedMessage) => {
+    const index = messages.value.findIndex(
+      (msg) => msg._id === updatedMessage.messageId
+    );
+    console.log(index);
+    if (index !== -1) {
+      messages.value[index].message = updatedMessage.message;
+    }
   });
 
   socket.on("messageDelete", (id) => {
@@ -338,6 +396,7 @@ onUnmounted(() => {
   border-radius: 10px;
   max-width: 70%;
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 .message-sent .message-content {

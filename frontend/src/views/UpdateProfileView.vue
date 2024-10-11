@@ -79,9 +79,15 @@
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Close
+                  <font-awesome-icon :icon="['fas', 'rectangle-xmark']" />
                 </button>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
+                  <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+                </button>
               </div>
             </form>
           </div>
