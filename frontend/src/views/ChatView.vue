@@ -49,7 +49,7 @@
                   <input
                     v-model="message.editedMessage"
                     @keyup.enter="submitEditMessage(message)"
-                    class="border-0 bg-body-secondary rounded-3 p-2"
+                    class="border-0 bg-body-secondary rounded-3 p-2 input-update"
                   />
                   <button
                     @click="submitEditMessage(message)"
@@ -77,10 +77,10 @@
                   >
                     <p>{{ message.message }}</p>
                   </button>
-                  <span @click="editMessage(message)">
+                  <span @click="editMessage(message)" >
                     <font-awesome-icon
                       :icon="['fas', 'pen-to-square']"
-                      class="text-black"
+                      class="text-black "
                     />
                   </span>
                 </div>
@@ -382,8 +382,8 @@ onUnmounted(() => {
 .message-sent .profile-image {
   order: -1;
 
-  margin-right: 0;
 }
+
 
 .message-sent {
   justify-content: flex-start;
@@ -413,6 +413,9 @@ onUnmounted(() => {
   color: black;
   border-top-left-radius: 0;
 }
+.input-update{
+  max-width: 90%;
+}
 
 .message-input {
   display: flex;
@@ -436,6 +439,7 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
+
 .message-input button:hover {
   background-color: #e95264;
 }
@@ -457,6 +461,7 @@ onUnmounted(() => {
 .typing-indicator span:nth-child(3) {
   animation-delay: 0.4s;
 }
+
 
 @keyframes typing {
   0%,
