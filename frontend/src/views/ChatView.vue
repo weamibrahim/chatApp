@@ -69,6 +69,15 @@
                 </div>
 
                 <div v-else>
+                  <span
+                    v-if="message.senderId._id !== userId"
+                    @click="editMessage(message)"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'pen-to-square']"
+                      class="text-black"
+                    />
+                  </span>
                   <button
                     type="button"
                     class="bg-transparent border-0"
@@ -77,10 +86,14 @@
                   >
                     <p>{{ message.message }}</p>
                   </button>
-                  <span @click="editMessage(message)" >
+                  <span
+                    v-if="message.senderId._id === userId"
+                    @click="editMessage(message)"
+                    class="edit_icon"
+                  >
                     <font-awesome-icon
                       :icon="['fas', 'pen-to-square']"
-                      class="text-black "
+                      class="text-black"
                     />
                   </span>
                 </div>
@@ -313,12 +326,21 @@ onMounted(async () => {
     console.log(index);
     if (index !== -1) {
       messages.value[index].message = updatedMessage.message;
+      toast.success("Message updated successfully", {
+        timeout: 1000,
+        position: "top-left",
+      })
     }
+
   });
 
   socket.on("messageDelete", (id) => {
     console.log("message deleted", id);
     messages.value = messages.value.filter((msg) => msg._id !== id);
+    toast.success("Message deleted successfully", {
+      timeout: 1000,
+      position: "top-left",
+    })
   });
   socket.on("notAuthorized", (data) => {
     toast.error(data.message, {
@@ -381,9 +403,7 @@ onUnmounted(() => {
 
 .message-sent .profile-image {
   order: -1;
-
 }
-
 
 .message-sent {
   justify-content: flex-start;
@@ -413,7 +433,7 @@ onUnmounted(() => {
   color: black;
   border-top-left-radius: 0;
 }
-.input-update{
+.input-update {
   max-width: 90%;
 }
 
@@ -439,7 +459,6 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
-
 .message-input button:hover {
   background-color: #e95264;
 }
@@ -461,7 +480,6 @@ onUnmounted(() => {
 .typing-indicator span:nth-child(3) {
   animation-delay: 0.4s;
 }
-
 
 @keyframes typing {
   0%,
