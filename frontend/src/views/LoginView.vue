@@ -68,7 +68,7 @@ const login = async () => {
     //console.log("Sending request to the server with payload:", user);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://chatapp-backend-production-69ae.up.railway.app/api/users/login",
 
         user
       );
@@ -83,9 +83,9 @@ const login = async () => {
         position: "top-right",
       });
     } catch (error) {
-      console.error("Login request failed:", error);
+      console.error(error.response.data.message, error);
       toast.error("Invalid email or password. Please try again.", {
-        timeout: 1000,
+        timeout: 2000,
         position: "top-left",
       });
     }

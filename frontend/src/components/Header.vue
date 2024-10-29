@@ -47,7 +47,7 @@ const store = useStore();
 const router = useRouter();
 const IsLogin = computed(() => store.getters.getIsLogin);
 const token = store.getters.getToken;
-const socket = io("http://localhost:5000");
+const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 
 const storedUser = localStorage.getItem("user");
 const userId = storedUser ? JSON.parse(storedUser)._id : null;

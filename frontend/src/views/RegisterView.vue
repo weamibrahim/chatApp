@@ -87,7 +87,7 @@ const register = async () => {
       formData.append("image", user.profileImage);
 
       const response = await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://chatapp-backend-production-69ae.up.railway.app/api/users/register",
         formData,
         {
           headers: {
@@ -103,8 +103,8 @@ const register = async () => {
       //console.log("Server response:", response);
     } catch (error) {
       console.error("Register request failed:", error);
-      toast.error("Failed to register. Please try again.", {
-        timeout: 1000,
+      toast.error(error.response.data.message, {
+        timeout: 2000,
         position: "top-left",
       });
     }

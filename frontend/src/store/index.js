@@ -46,7 +46,7 @@ export default createStore({
     async fetchOneUser({ commit }, receiverId) {
       try {
         const res = await axios(
-          `http://localhost:5000/api/users/user/${receiverId}`,
+          `https://chatapp-backend-production-69ae.up.railway.app/api/users/user/${receiverId}`,
           {
             method: "GET",
             headers: {
@@ -63,7 +63,7 @@ export default createStore({
     async fetchMessages({ commit }, { senderId, receiverId }) {
       try {
         const res = await axios(
-          `http://localhost:5000/api/messages/${senderId}/${receiverId}`,
+          `https://chatapp-backend-production-69ae.up.railway.app/api/messages/${senderId}/${receiverId}`,
           {
             method: "GET",
             headers: {

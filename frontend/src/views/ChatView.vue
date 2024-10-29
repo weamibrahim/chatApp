@@ -300,7 +300,7 @@ watch(
 
 onMounted(async () => {
   await fetchUser();
-  socket = io("http://localhost:5000");
+  socket = io("https://chatapp-backend-production-69ae.up.railway.app");
 
   socket.emit("join", userId);
 
