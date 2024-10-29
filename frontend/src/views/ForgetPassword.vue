@@ -24,7 +24,7 @@ const sendEmail = async () => {
   try {
     //console.log(email.value);
     const response = await axios.post(
-      "https://chatapp-backend-production-69ae.up.railway.app/api/users/forgot-password",
+      "http://localhost:5000/api/users/forgot-password",
       { email: email.value }
     );
 

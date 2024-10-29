@@ -7,71 +7,83 @@
       placeholder="Search"
     />
 
-    <div v-for="user in filterUsers" :key="user._id">
-      <div @click="goToChat(user)" class="d-flex align-items-center my-3">
+    <div v-for="users in filterUsers" :key="users.user._id" >
+      <div @click="goToChat(users.user)" class="d-flex  my-3">
         <div class="position-relative">
-          <img :src="user.profileImage" />
+          <img :src="users.user.profileImage" />
           <div
             :class="{
-              'mark-green': user.status === 'online',
-              'mark-red': user.status === 'offline',
+              'mark-green': users.user.status === 'online',
+              'mark-red': users.user.status === 'offline',
             }"
             class="status-indicator position-absolute"
           ></div>
         </div>
-        <div class="mx-3 pe-none">{{ user.name }}</div>
+        <div class="mx-3 pe-none">
+         <div> {{ users.user.name }}</div>
+         <div class="ms-auto pe-3 text-muted block text-break">
+         
+          {{ users.lastMessage ? users.lastMessage.message : 'No messages yet' }}
+        </div>
+        </div>
+        
       </div>
+      
     </div>
   </div>
 </template>
 
 <script setup>
 import { useStore } from "vuex";
-import { computed, onMounted, ref} from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import io from "socket.io-client";
 
 const search = ref("");
-const socket = io("https://chatapp-backend-production-69ae.up.railway.app");
+const socket = io("http://localhost:5000");
 
 const users = ref([]);
 const store = useStore();
 const router = useRouter();
 
 let infOfUser = JSON.parse(localStorage.getItem("user"));
-console.log(infOfUser);
 const userId = infOfUser._id;
-
-
 
 const fetchUsers = () => {
   users.value = [];
   socket.emit("getusers", userId);
 };
+
 const filterUsers = computed(() => {
-  //       if (!search.value.trim()) {
-  //   return [];  // Return an empty array if search is empty
-  // }
-  return users.value.filter((user) => {
+  return users.value.filter(({ user }) => {
     return user.name.toLowerCase().includes(search.value.toLowerCase());
   });
 });
 
 onMounted(async () => {
- 
- await fetchUsers();
-
+  await fetchUsers();
 
   socket.emit("join", userId);
   socket.on("updateUserStatus", (updatedUser) => {
-    const user = users.value.find((u) => u._id === updatedUser.userId);
+    const user = users.value.find((u) => u.user._id === updatedUser.userId);
     if (user) {
-      user.status = updatedUser.status;
-    } 
+      user.user.status = updatedUser.status; 
+    }
   });
-  socket.on("users", (data) => {
-    users.value = data;
-    console.log(users.value)
+
+  socket.on("users", (userWithLastMessages) => {
+    console.log(userWithLastMessages);
+    users.value = userWithLastMessages; 
+  });
+
+
+  socket.on("updateLastMessage", ({ user, lastMessage }) => {
+    const existingUser = users.value.find((u) => u.user._id === user._id);
+    if (existingUser) {
+      existingUser.lastMessage = lastMessage; 
+    } else {
+      users.value.push({ user, lastMessage });
+    }
   });
 });
 

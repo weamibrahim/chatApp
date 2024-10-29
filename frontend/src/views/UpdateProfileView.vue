@@ -126,7 +126,7 @@ const updateProfile = async () => {
 
   try {
     const data = await axios.put(
-      `https://chatapp-backend-production-69ae.up.railway.app/api/users/${infOfUser._id}`,
+      `http://localhost:5000/api/users/${infOfUser._id}`,
       formData,
       {
         headers: {

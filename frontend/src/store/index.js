@@ -19,7 +19,7 @@ export default createStore({
     getToken(state) {
       return state.token;
     },
-    
+
     getIsLogin(state) {
       return state.IsLogin;
     },
@@ -46,7 +46,7 @@ export default createStore({
     async fetchOneUser({ commit }, receiverId) {
       try {
         const res = await axios(
-          `https://chatapp-backend-production-69ae.up.railway.app/api/users/user/${receiverId}`,
+          `http://localhost:5000/api/users/user/${receiverId}`,
           {
             method: "GET",
             headers: {
@@ -63,7 +63,7 @@ export default createStore({
     async fetchMessages({ commit }, { senderId, receiverId }) {
       try {
         const res = await axios(
-          `https://chatapp-backend-production-69ae.up.railway.app/api/messages/${senderId}/${receiverId}`,
+          `http://localhost:5000/api/messages/${senderId}/${receiverId}`,
           {
             method: "GET",
             headers: {

@@ -89,7 +89,6 @@
                   <span
                     v-if="message.senderId._id === userId"
                     @click="editMessage(message)"
-                    class="edit_icon"
                   >
                     <font-awesome-icon
                       :icon="['fas', 'pen-to-square']"
@@ -301,7 +300,7 @@ watch(
 
 onMounted(async () => {
   await fetchUser();
-  socket = io("https://chatapp-backend-production-69ae.up.railway.app");
+  socket = io("http://localhost:5000");
 
   socket.emit("join", userId);
 
@@ -329,9 +328,8 @@ onMounted(async () => {
       toast.success("Message updated successfully", {
         timeout: 1000,
         position: "top-left",
-      })
+      });
     }
-
   });
 
   socket.on("messageDelete", (id) => {
@@ -340,7 +338,7 @@ onMounted(async () => {
     toast.success("Message deleted successfully", {
       timeout: 1000,
       position: "top-left",
-    })
+    });
   });
   socket.on("notAuthorized", (data) => {
     toast.error(data.message, {
